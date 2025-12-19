@@ -90,7 +90,12 @@ public class Topic_03_Locator {
 
         driver.findElement(By.xpath("//input[contains(@class,'validate-password')]"));
     }
+    @Test
+    public void TC_09_Xpath(){
+        driver.findElement(By.xpath("//input[@name='login[password]']"));
 
+        driver.findElement(By.xpath("//input[contains(@class,'validate-password')]"));
+    }
     @AfterClass
     public void afterClass(){
     driver.quit();
