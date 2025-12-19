@@ -52,6 +52,11 @@ public class Topic_04_Relative_Locator {
         String footerMenu03 = driver.findElement(By.xpath("(//h2[starts-with(@class,'footer-menu')])[3]")).getText();
         System.out.println(footerMenu03);
 
+        String nopCommerce = driver.findElement(By.xpath("//img[@alt='nopCommerce demo store']")).getText();
+        System.out.println(nopCommerce);
+
+        String
+
     }
     @AfterClass
     public void afterClass(){
