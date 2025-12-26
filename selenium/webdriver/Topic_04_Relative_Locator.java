@@ -31,8 +31,9 @@ public class Topic_04_Relative_Locator {
                 .toLeftOf(By.xpath("//a[text()='Forgot password?']")));
         System.out.println(remeberMeElememt.getText());
 
-        String rememberMeText = driver.findElement(By.xpath("//label[text()='Remember me?']")).getText();
-        System.out.println(rememberMeText);
+        WebElement rememberMeText = driver.findElement(By.xpath("//label[text()='Remember me?']"));
+        rememberMeText.getText();
+        //System.out.println(rememberMeText);
 
         String newsletter = driver.findElement(By.xpath("//h2[text()='Newsletter']")).getText();
         System.out.println(newsletter);
@@ -55,7 +56,6 @@ public class Topic_04_Relative_Locator {
         String nopCommerce = driver.findElement(By.xpath("//img[@alt='nopCommerce demo store']")).getText();
         System.out.println(nopCommerce);
 
-        String
 
     }
     @AfterClass
