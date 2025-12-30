@@ -206,62 +206,77 @@ public class Topic_07_Element {
         }
     }
 
-    // Hàm bổ trợ kiểm tra logic của Password
-    public void verifyPasswordValidation(String password) {
-        // 1. Kiểm tra logic bằng Regex
-        boolean hasLowercase = password.matches(".*[a-z].*");
-        boolean hasUppercase = password.matches(".*[A-Z].*");
-        boolean hasNumber = password.matches(".*[0-9].*");
-        boolean hasSpecial = password.matches(".*[!@#$%^&*(),.?\":{}|<>].*");
-        boolean has8Chars = password.length() >= 8;
-
-        // 2. Verify trạng thái UI dựa trên logic trên
-        // isValidationMet là hàm kiểm tra class "completed" đã viết ở bước trước
-        Assert.assertEquals(isValidationMet("lowercase-char"), hasLowercase, "Lỗi hiển thị Lowercase!");
-        Assert.assertEquals(isValidationMet("uppercase-char"), hasUppercase, "Lỗi hiển thị Uppercase!");
-        Assert.assertEquals(isValidationMet("number-char"), hasNumber, "Lỗi hiển thị Number!");
-        Assert.assertEquals(isValidationMet("special-char"), hasSpecial, "Lỗi hiển thị Special Char!");
-        Assert.assertEquals(isValidationMet("8-char"), has8Chars, "Lỗi hiển thị Độ dài 8 ký tự!");
-    }
-
     @Test
-    public void TC_04(){
+    public void TC_04_Mailchimp() throws InterruptedException {
         driver.get("https://login.mailchimp.com/signup/");
-        // Step 02: Nhập Email
-        WebElement emailField = driver.findElement(By.id("email"));
-        String testEmail = "kqvu1902@gmail.com";
-        emailField.sendKeys(testEmail);
+        // Điền email
+        driver.findElement(By.id("email")).sendKeys("kqvu1902@gmail.com");
+        // Điền password
+        driver.findElement(By.id("new_password")).sendKeys("test");
+        Thread.sleep(2000);
+        // Lowercase character
+        Assert.assertTrue(driver.findElement(By.xpath("//li[@class='lowercase-char completed']")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.xpath("//li[@class='uppercase-char not-completed']")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.xpath("//li[@class='number-char not-completed']")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.xpath("//li[@class='special-char not-completed']")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.xpath("//li[@class='8-char not-completed']")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.xpath("//li[@class='username-check completed']")).isDisplayed());
 
-        WebElement username = driver.findElement(By.id("new_username"));
-        username.click();
+        driver.findElement(By.id("new_password")).clear();
+        driver.findElement(By.id("new_password")).sendKeys("TEST");
+        Thread.sleep(2000);
+        // Uppercase char
+        Assert.assertTrue(driver.findElement(By.xpath("//li[@class='lowercase-char not-completed']")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.xpath("//li[@class='uppercase-char completed']")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.xpath("//li[@class='number-char not-completed']")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.xpath("//li[@class='special-char not-completed']")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.xpath("//li[@class='8-char not-completed']")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.xpath("//li[@class='username-check completed']")).isDisplayed());
 
-        // Kiểm tra Username tự động lấy dữ liệu từ Email
-        WebElement usernameField = driver.findElement(By.id("new_username"));
-        Assert.assertEquals(usernameField.getAttribute("value"), testEmail, "Username không khớp với Email!");
+        driver.findElement(By.id("new_password")).clear();
+        driver.findElement(By.id("new_password")).sendKeys("1234");
+        Thread.sleep(2000);
+        // Number char
+        Assert.assertTrue(driver.findElement(By.xpath("//li[@class='lowercase-char not-completed']")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.xpath("//li[@class='uppercase-char not-completed']")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.xpath("//li[@class='number-char completed']")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.xpath("//li[@class='special-char not-completed']")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.xpath("//li[@class='8-char not-completed']")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.xpath("//li[@class='username-check completed']")).isDisplayed());
 
-        // Step 03: Nhập dữ liệu Password để kiểm tra Validation
-        WebElement passwordField = driver.findElement(By.id("new_password"));
+        driver.findElement(By.id("new_password")).clear();
+        driver.findElement(By.id("new_password")).sendKeys("@#$%!");
+        Thread.sleep(2000);
+        // Special char
+        Assert.assertTrue(driver.findElement(By.xpath("//li[@class='lowercase-char not-completed']")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.xpath("//li[@class='uppercase-char not-completed']")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.xpath("//li[@class='number-char not-completed']")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.xpath("//li[@class='special-char completed']")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.xpath("//li[@class='8-char not-completed']")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.xpath("//li[@class='username-check completed']")).isDisplayed());
 
-        // Trường hợp 2: Nhập pass đầy đủ đúng chuẩn
-        String pass2 = "AutoTest123!";
-        passwordField.sendKeys(pass2);
-        verifyPasswordValidation(pass2); // Tự động check: Tất cả phải là True
+        driver.findElement(By.id("new_password")).clear();
+        driver.findElement(By.id("new_password")).sendKeys("kqvu1902@gmail.com");
+        Thread.sleep(2000);
+        // 8 char
+        Assert.assertTrue(driver.findElement(By.xpath("//li[@class='lowercase-char completed']")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.xpath("//li[@class='uppercase-char not-completed']")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.xpath("//li[@class='number-char completed']")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.xpath("//li[@class='special-char completed']")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.xpath("//li[@class='8-char completed']")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.xpath("//li[@class='username-check not-completed']")).isDisplayed());
 
-        // Xóa đi để nhập case mới
-        passwordField.clear();
-
-      // Trường hợp 1: Nhập "1a" (như trong ảnh)
-        String pass1 = "1a";
-        passwordField.sendKeys(pass1);
-        verifyPasswordValidation(pass1); // Tự động check: Lower=T, Num=T, các cái khác=F
+        driver.findElement(By.id("new_password")).clear();
+        driver.findElement(By.id("new_password")).sendKeys("Kqvux1902@");
+        Thread.sleep(2000);
+        // Full
+        Assert.assertFalse(driver.findElement(By.xpath("//li[@class='lowercase-char completed']")).isDisplayed());
+        Assert.assertFalse(driver.findElement(By.xpath("//li[@class='uppercase-char completed']")).isDisplayed());
+        Assert.assertFalse(driver.findElement(By.xpath("//li[@class='number-char completed']")).isDisplayed());
+        Assert.assertFalse(driver.findElement(By.xpath("//li[@class='special-char completed']")).isDisplayed());
+        Assert.assertFalse(driver.findElement(By.xpath("//li[@class='8-char completed']")).isDisplayed());
+        Assert.assertFalse(driver.findElement(By.xpath("//li[@class='username-check completed']")).isDisplayed());
     }
-
-    // Hàm bổ trợ kiểm tra xem điều kiện password đã chuyển sang màu xanh (completed) chưa
-    public boolean isValidationMet(String className) {
-        // Mailchimp thường dùng class "completed" cho các item đã thỏa mãn
-        return driver.findElement(By.className(className)).getAttribute("class").contains("completed");
-    }
-
     @AfterClass
     public void afterClass(){
         driver.quit();
