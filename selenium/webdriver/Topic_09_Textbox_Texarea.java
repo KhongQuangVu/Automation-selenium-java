@@ -34,7 +34,7 @@ public class Topic_09_Textbox_Texarea {
         WebElement myAccount = driver.findElement(By.xpath("//div[@id='header-account']//a[@title='My Account'][normalize-space()='My Account']"));
         myAccount.click();
 
-        // Clic Create An Account
+        // Click Create An Account
         WebElement createAnAccount = driver.findElement(By.xpath("//a[@title='Create an Account']"));
         createAnAccount.click();
 
@@ -191,15 +191,19 @@ public class Topic_09_Textbox_Texarea {
 
         String verifyFirstName1 = driver.findElement(By.xpath("//input[@placeholder='First Name']")).getDomProperty("value");
         Assert.assertEquals(verifyFirstName1,firstName);
+        System.out.println(verifyFirstName1);
 
         String verifyMiddleName1 = driver.findElement(By.xpath("//input[@placeholder='Middle Name']")).getDomProperty("value");
         Assert.assertEquals(verifyMiddleName1,middleName);
+        System.out.println(verifyMiddleName1);
 
         String verifyLastName1 = driver.findElement(By.xpath("//input[@placeholder='Last Name']")).getDomProperty("value");
         Assert.assertEquals(verifyLastName1,lastName);
+        System.out.println(verifyLastName1);
 
         String verifyElementID1 = driver.findElement(By.xpath("//label[text()='Employee Id']/ancestor::div[contains(@class,'oxd-input-group')]//input")).getDomProperty("value");
         Assert.assertEquals(verifyElementID1,elementID);
+        System.out.println(verifyElementID1);
 
         // Click chọn Immigration
         driver.findElement(By.xpath("//a[normalize-space()='Immigration']")).click();
@@ -210,11 +214,14 @@ public class Topic_09_Textbox_Texarea {
 
         String verifyNumber1 = driver.findElement(By.xpath("//label[text()='Number']/parent::div/following-sibling::div//input")).getDomProperty("value");
         Assert.assertEquals(verifyNumber1,number);
+        System.out.println(verifyNumber1);
 
         String verifyComments1 = driver.findElement(By.xpath("//textarea[@placeholder='Type Comments here']")).getDomProperty("value");
         Assert.assertEquals(verifyComments1,comments);
+        System.out.println(verifyComments1);
 
     }
+
 
     @AfterClass
     public void afterClass(){
