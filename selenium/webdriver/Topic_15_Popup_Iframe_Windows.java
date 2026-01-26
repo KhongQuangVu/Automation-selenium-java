@@ -86,8 +86,33 @@ public class Topic_15_Popup_Iframe_Windows {
 
     @Test
     public void TC_03_Popup_notDom(){
+        driver.get("https://tiki.vn/");
 
+        driver.findElement(By.xpath("//img[@alt='close-icon']")).click();
+        driver.findElement(By.xpath("//span[contains(text(),'Tài khoản')]")).click();
+        Assert.assertTrue(driver.findElement(By.xpath("//div[@class='sc-2745a82-0 gvDbCz']")).isDisplayed());
+
+        driver.findElement(By.xpath("//p[@class='login-with-email']")).click();
+        driver.findElement(By.xpath("//button[contains(text(),'Đăng nhập')]")).click();
+        Assert.assertTrue(driver.findElement(By.xpath("//span[contains(text(),'Email không được để trống')]")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.xpath("//span[contains(text(),'Mật khẩu không được để trống')]")).isDisplayed());
+
+        driver.findElement(By.xpath("//button[@class='btn-close']")).click();
+        Assert.assertEquals(driver.findElements(By.xpath("//div[contains(@class,'sc-2745a82-0')]")).size(), 0);
     }
+
+    @Test
+    public void TC_04_Random_Popup(){
+        driver.get("http://www.kmplayer.com/");
+
+        By popup = By.xpath("//div[@role='dialog']");
+        if (driver.findElements(popup).size() > 0){
+            driver.findElement(By.xpath("//span[@class='notranslate']")).click();
+        }
+        driver.findElement(By.xpath("//div[@class='close']")).click();
+    }
+
+
     @AfterClass
     public void afterClass(){
         driver.quit();
